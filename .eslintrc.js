@@ -1,3 +1,8 @@
+const cracoConfig = require('./craco.config.js');
+
+const aliasMap = Object.entries(cracoConfig.webpack.alias);
+console.info(aliasMap);
+
 module.exports = {
   env: {
     browser: true,
@@ -18,9 +23,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       alias: {
-        map: [
-          ['@', './src'],
-        ],
+        map: aliasMap,
         extensions: ['.js', '.jsx', '.scss'],
       },
     },
