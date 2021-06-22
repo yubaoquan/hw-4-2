@@ -28,9 +28,10 @@ import {
   snsIconStyle,
   topInputStyle,
   inputHeight,
-} from '../common-style.js';
+} from '@/components/common-style.js';
 
-import useToast from '../../utils/toast.js';
+import request from '@/utils/request.js';
+import useToast from '@/utils/toast.js';
 
 const protocolLink = 'https://baidu.com';
 const privacyLink = 'https://baidu.com';
@@ -49,8 +50,22 @@ const protocolLinkStyle = {
 export default function Register() {
   const toast = useToast();
 
-  const handleSubmit = () => {
-    toast.error('注册失败');
+  const handleSubmit = async () => {
+    try {
+      const { data } = await request.post('/users', {
+        user: {
+          username: 'Jac2o1b',
+          email: 'ja4k3@jake.jake',
+          password: 'jakejake',
+        },
+      });
+      console.info(data);
+      toast.success('注册成功');
+    } catch (e) {
+      console.error(e);
+      toast.error('注册失败');
+      console.info(e.response?.data);
+    }
   };
 
   const phoneValid = true;

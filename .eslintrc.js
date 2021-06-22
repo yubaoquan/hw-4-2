@@ -15,11 +15,22 @@ module.exports = {
   plugins: [
     'react',
   ],
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@', './src'],
+        ],
+        extensions: ['.js', '.jsx', '.scss'],
+      },
+    },
+  },
   rules: {
     'import/extensions': ['error', 'ignorePackages'],
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'off',
     'import/prefer-default-export': 'off',
     'object-curly-newline': ['error', { multiline: true, consistent: true }],
+    'no-unused-vars': 'warn',
   },
 };

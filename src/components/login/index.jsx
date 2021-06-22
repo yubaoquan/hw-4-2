@@ -25,9 +25,10 @@ import {
   snsIconStyle,
   topInputStyle,
   inputHeight,
-} from '../common-style.js';
+} from '@/components/common-style.js';
 
-import useToast from '../../utils/toast.js';
+import request from '@/utils/request.js';
+import useToast from '@/utils/toast.js';
 
 export default function Login() {
   const toast = useToast();
@@ -37,8 +38,21 @@ export default function Login() {
     _hover: { bgColor: '#187cb7' },
   };
 
-  function handleSubmit() {
-    toast.success('登录成功');
+  async function handleSubmit() {
+    try {
+      const { data } = await request.post('/users/login', {
+        user: {
+          username: 'Jacob',
+          email: 'jake@jake.jake',
+        },
+      });
+      console.info(data);
+      toast.success('登录成功');
+    } catch (e) {
+      console.error(e);
+      console.info(e?.response?.data);
+      toast.error('登录失败');
+    }
   }
 
   return (

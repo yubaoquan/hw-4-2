@@ -7,8 +7,8 @@ import {
 import { useEffect } from 'react';
 
 import { Box, Flex, Text } from '@chakra-ui/react';
-import Login from './components/login/index.jsx';
-import Register from './components/register/index.jsx';
+import Login from '@/components/login/index.jsx';
+import Register from '@/components/register/index.jsx';
 import style from './style.module.scss';
 
 function App() {
