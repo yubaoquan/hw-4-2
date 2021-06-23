@@ -35,5 +35,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'object-curly-newline': ['error', { multiline: true, consistent: true }],
     'no-unused-vars': 'warn',
+    'no-console': 'off',
   },
 };
