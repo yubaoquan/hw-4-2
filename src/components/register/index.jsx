@@ -12,6 +12,7 @@ import {
   InputRightElement,
   Link,
   Text,
+  Tooltip,
 } from '@chakra-ui/react';
 
 import {
@@ -31,7 +32,10 @@ import {
 } from '@/components/common-style.js';
 
 import request from '@/utils/request.js';
+import { showError } from '@/utils/show-error.js';
+import { useFormik } from 'formik';
 import useToast from '@/utils/toast.js';
+import * as Yup from 'yup';
 
 const protocolLink = 'https://baidu.com';
 const privacyLink = 'https://baidu.com';
@@ -49,32 +53,64 @@ const protocolLinkStyle = {
 
 export default function Register() {
   const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async () => {
+  const requestRegister = async ({ username, email, password }) => {
     try {
+      if (isLoading) return;
+      setIsLoading(true);
       const { data } = await request.post('/users', {
         user: {
-          username: 'Jac2o1b',
-          email: 'ja4k3@jake.jake',
-          password: 'jakejake',
+          username,
+          email,
+          password,
         },
       });
       console.info(data);
       toast.success('注册成功');
     } catch (e) {
-      console.error(e);
-      toast.error('注册失败');
       console.info(e.response?.data);
+      showError(toast, e.response?.data?.errors, '注册失败');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const phoneValid = true;
+  const MIN_USERNAME_LEN = 6;
+  const MAX_USERNAME_LEN = 30;
+  const MIN_PASSWORD_LEN = 8;
 
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const formik = useFormik({
+    initialValues: { username: '', email: '', password: '' },
+    validationSchema: Yup.object({
+      username: Yup.string()
+        .trim()
+        .required('请输入昵称')
+        .min(MIN_USERNAME_LEN, `用户名最小${MIN_USERNAME_LEN}个字符`)
+        .max(MAX_USERNAME_LEN, `用户名最大${MAX_USERNAME_LEN}个字符`),
+      email: Yup.string()
+        .trim()
+        .required('请输入邮箱地址')
+        .email('邮箱无效'),
+      password: Yup.string()
+        .min(MIN_PASSWORD_LEN, `密码最短${MIN_PASSWORD_LEN}位`)
+        .required('请输入密码')
+        .test({
+          name: 'password',
+          message: '密码不能全是数字',
+          test(pwd) {
+            return !/^\d*$/g.test(pwd);
+          },
+        }),
+    }),
+    onSubmit(values) {
+      requestRegister(values);
+    },
+  });
 
-  const handlePhoneNumberChange = (e) => {
-    setPhoneNumber(e.target.value);
-  };
+  const usernameError = formik.touched.username && formik.errors.username;
+  const emailError = formik.touched.email && formik.errors.email;
+  const passwordError = formik.touched.password && formik.errors.password;
 
   const validCodeBtnStyle = {
     w: '100px',
@@ -82,8 +118,8 @@ export default function Register() {
     color: '#fff',
     bgColor: '#42c02e',
     fontSize: '13px',
-    opacity: phoneValid ? 1 : 0.5,
-    cursor: phoneValid ? 'pointer' : 'text',
+    opacity: !emailError ? 1 : 0.5,
+    cursor: !emailError ? 'pointer' : 'text',
     fontWeight: 'normal',
     borderRadius: '20px',
     _hover: {
@@ -95,29 +131,56 @@ export default function Register() {
     <Box>
       <form>
         <FormControl isRequired>
-          <InputGroup>
-            <InputLeftElement pointerEvents="none" h={inputHeight}>
-              <Icon as={GoPerson} color={myGray} />
-            </InputLeftElement>
-            <Input placeholder="你的昵称" {...topInputStyle} />
-          </InputGroup>
+          <Tooltip
+            hasArrow
+            arrowSize={8}
+            placement="right"
+            label={usernameError}
+            isOpen={!!usernameError}
+          >
+            <InputGroup>
+              <InputLeftElement pointerEvents="none" h={inputHeight}>
+                <Icon as={GoPerson} color={myGray} />
+              </InputLeftElement>
+              <Input
+                placeholder="你的昵称"
+                {...topInputStyle}
+                {...formik.getFieldProps('username')}
+              />
+            </InputGroup>
+          </Tooltip>
         </FormControl>
 
         <FormControl isRequired>
-          <InputGroup>
-            <InputLeftElement pointerEvents="none" h={inputHeight}>
-              <Icon as={ImMobile2} color={myGray} />
-            </InputLeftElement>
-            <Input placeholder="手机号" {...middleInputStyle} value={phoneNumber} onInput={handlePhoneNumberChange} />
-          </InputGroup>
+          <Tooltip
+            hasArrow
+            arrowSize={8}
+            placement="right"
+            label={emailError}
+            isOpen={!!emailError}
+          >
+            <InputGroup>
+              <InputLeftElement pointerEvents="none" h={inputHeight}>
+                <Icon as={ImMobile2} color={myGray} />
+              </InputLeftElement>
+              <Input
+                placeholder="手机号或邮箱"
+                {...middleInputStyle}
+                {...formik.getFieldProps('email')}
+              />
+            </InputGroup>
+          </Tooltip>
         </FormControl>
 
-        {phoneNumber && (
+        {formik.values.email && (
         <InputGroup>
           <InputLeftElement pointerEvents="none" h={inputHeight}>
             <Icon as={ImMobile2} color={myGray} />
           </InputLeftElement>
-          <Input placeholder="手机验证码" {...middleInputStyle} />
+          <Input
+            placeholder="手机验证码"
+            {...middleInputStyle}
+          />
           <InputRightElement w="100px" h={inputHeight} pr="10px">
             <Button {...validCodeBtnStyle}>发送验证码</Button>
           </InputRightElement>
@@ -125,15 +188,36 @@ export default function Register() {
         )}
 
         <FormControl isRequired>
-          <InputGroup>
-            <InputLeftElement pointerEvents="none" h={inputHeight}>
-              <Icon as={AiFillLock} color={myGray} />
-            </InputLeftElement>
-            <Input placeholder="设置密码" borderTopRadius="0" {...bottomInputStyle} />
-          </InputGroup>
+          <Tooltip
+            hasArrow
+            arrowSize={8}
+            placement="right"
+            label={passwordError}
+            isOpen={!!passwordError}
+          >
+            <InputGroup>
+              <InputLeftElement pointerEvents="none" h={inputHeight}>
+                <Icon as={AiFillLock} color={myGray} />
+              </InputLeftElement>
+              <Input
+                placeholder="设置密码"
+                type="password"
+                {...bottomInputStyle}
+                {...formik.getFieldProps('password')}
+              />
+            </InputGroup>
+          </Tooltip>
         </FormControl>
 
-        <Button {...submitBtnStyle} {...commonSubmitBtnStyle} onClick={handleSubmit}>注册</Button>
+        <Button
+          {...submitBtnStyle}
+          {...commonSubmitBtnStyle}
+          onClick={formik.handleSubmit}
+          isLoading={isLoading}
+          loadingText="正在注册"
+        >
+          注册
+        </Button>
       </form>
 
       <Text my="10px" textAlign="center" fontSize="12px" lineHeight="20px" color={myGray}>
