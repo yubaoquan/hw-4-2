@@ -23,11 +23,11 @@ function App() {
   return (
     <Flex h="100vh" align="center" justify="center">
       <Flex align="flex-start" h="600px" justify="space-between">
-        <Box { ...cardStyle }>
+        <Box {...cardStyle}>
           <Flex p="10px" mb="50px" align="center" justify="center" fontSize="18px">
-            <NavLink to="/login" className={ style.navLink } activeClassName={ style.navActive }>登录</NavLink>
-            <Text color="#ea6f5a" p="10px" fontWeight={ 700 }>·</Text>
-            <NavLink to="/register" className={ style.navLink } activeClassName={ style.navActive }>注册</NavLink>
+            <NavLink to="/login" className={style.navLink} activeClassName={style.navActive}>登录</NavLink>
+            <Text color="#ea6f5a" p="10px" fontWeight={700}>·</Text>
+            <NavLink to="/register" className={style.navLink} activeClassName={style.navActive}>注册</NavLink>
           </Flex>
 
           <RouteConfig />

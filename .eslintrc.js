@@ -40,7 +40,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'import/prefer-default-export': 'off',
     'brace-style': ['error', '1tbs'],
-    'react/jsx-curly-spacing': ['error', { when: 'always', attributes: true, children: true }],
+    'react/jsx-curly-spacing': ['error', { when: 'never', attributes: true, children: true }],
     'no-param-reassign': ['error', { props: false }],
     'max-statements-per-line': ['error', { max: 1 }],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', 'tsx'] }],

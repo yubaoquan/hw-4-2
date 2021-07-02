@@ -130,19 +130,19 @@ export default function Register() {
         <FormControl isRequired>
           <Tooltip
             hasArrow
-            arrowSize={ 8 }
+            arrowSize={8}
             placement="right"
-            label={ usernameError }
-            isOpen={ !!usernameError }
+            label={usernameError}
+            isOpen={!!usernameError}
           >
             <InputGroup>
-              <InputLeftElement pointerEvents="none" h={ inputHeight }>
-                <Icon as={ GoPerson } color={ myGray } />
+              <InputLeftElement pointerEvents="none" h={inputHeight}>
+                <Icon as={GoPerson} color={myGray} />
               </InputLeftElement>
               <Input
                 placeholder="你的昵称"
-                { ...topInputStyle }
-                { ...formik.getFieldProps('username') }
+                {...topInputStyle}
+                {...formik.getFieldProps('username')}
               />
             </InputGroup>
           </Tooltip>
@@ -151,86 +151,86 @@ export default function Register() {
         <FormControl isRequired>
           <Tooltip
             hasArrow
-            arrowSize={ 8 }
+            arrowSize={8}
             placement="right"
-            label={ emailError }
-            isOpen={ !!emailError }
+            label={emailError}
+            isOpen={!!emailError}
           >
             <InputGroup>
-              <InputLeftElement pointerEvents="none" h={ inputHeight }>
-                <Icon as={ ImMobile2 } color={ myGray } />
+              <InputLeftElement pointerEvents="none" h={inputHeight}>
+                <Icon as={ImMobile2} color={myGray} />
               </InputLeftElement>
               <Input
                 placeholder="手机号或邮箱"
-                { ...middleInputStyle }
-                { ...formik.getFieldProps('email') }
+                {...middleInputStyle}
+                {...formik.getFieldProps('email')}
               />
             </InputGroup>
           </Tooltip>
         </FormControl>
 
-        { formik.values.email && (
+        {formik.values.email && (
         <InputGroup>
-          <InputLeftElement pointerEvents="none" h={ inputHeight }>
-            <Icon as={ ImMobile2 } color={ myGray } />
+          <InputLeftElement pointerEvents="none" h={inputHeight}>
+            <Icon as={ImMobile2} color={myGray} />
           </InputLeftElement>
           <Input
             placeholder="手机验证码"
-            { ...middleInputStyle }
+            {...middleInputStyle}
           />
-          <InputRightElement w="100px" h={ inputHeight } pr="10px">
-            <Button { ...validCodeBtnStyle }>发送验证码</Button>
+          <InputRightElement w="100px" h={inputHeight} pr="10px">
+            <Button {...validCodeBtnStyle}>发送验证码</Button>
           </InputRightElement>
         </InputGroup>
-        ) }
+        )}
 
         <FormControl isRequired>
           <Tooltip
             hasArrow
-            arrowSize={ 8 }
+            arrowSize={8}
             placement="right"
-            label={ passwordError }
-            isOpen={ !!passwordError }
+            label={passwordError}
+            isOpen={!!passwordError}
           >
             <InputGroup>
-              <InputLeftElement pointerEvents="none" h={ inputHeight }>
-                <Icon as={ AiFillLock } color={ myGray } />
+              <InputLeftElement pointerEvents="none" h={inputHeight}>
+                <Icon as={AiFillLock} color={myGray} />
               </InputLeftElement>
               <Input
                 placeholder="设置密码"
                 type="password"
-                { ...bottomInputStyle }
-                { ...formik.getFieldProps('password') }
+                {...bottomInputStyle}
+                {...formik.getFieldProps('password')}
               />
             </InputGroup>
           </Tooltip>
         </FormControl>
 
         <Button
-          { ...submitBtnStyle }
-          { ...commonSubmitBtnStyle }
-          onClick={ formik.handleSubmit }
-          isLoading={ isLoading }
+          {...submitBtnStyle}
+          {...commonSubmitBtnStyle}
+          onClick={formik.handleSubmit}
+          isLoading={isLoading}
           loadingText="正在注册"
         >
           注册
         </Button>
       </form>
 
-      <Text my="10px" textAlign="center" fontSize="12px" lineHeight="20px" color={ myGray }>
+      <Text my="10px" textAlign="center" fontSize="12px" lineHeight="20px" color={myGray}>
         点击 “注册” 即表示您同意并愿意遵守简书
         <br />
-        <Link href={ protocolLink } { ...protocolLinkStyle }>用户协议</Link>
-        { ' ' }
+        <Link href={protocolLink} {...protocolLinkStyle}>用户协议</Link>
+        {' '}
         和
-        { ' ' }
-        <Link href={ privacyLink } { ...protocolLinkStyle }>隐私政策</Link>
+        {' '}
+        <Link href={privacyLink} {...protocolLinkStyle}>隐私政策</Link>
         。
       </Text>
       <TextDivider title="社交帐号直接注册" />
       <Flex justify="center" py="10px">
-        <Icon as={ AiFillWechat } { ...snsIconStyle } color="#00bb29" />
-        <Icon as={ AiOutlineQq } { ...snsIconStyle } color="#498ad5" />
+        <Icon as={AiFillWechat} {...snsIconStyle} color="#00bb29" />
+        <Icon as={AiOutlineQq} {...snsIconStyle} color="#498ad5" />
       </Flex>
     </Box>
   );

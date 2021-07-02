@@ -5,9 +5,9 @@ export default () => {
 
   return (
     arr.map((w) => (
-      <div key={ w }>
-        <div>{ `this width is ${w}` }</div>
-        <Box w={ w } bgColor="skyblue" h="20px" />
+      <div key={w}>
+        <div>{`this width is ${w}`}</div>
+        <Box w={w} bgColor="skyblue" h="20px" />
       </div>
     ))
   );

@@ -5,10 +5,10 @@ import WidthTest from '@/components/size-test.js';
 
 const RouteConfig = () => (
   <Switch>
-    <Route exact path="/" component={ Login } />
-    <Route path="/login" component={ Login } />
-    <Route path="/register" component={ Register } />
-    <Route path="/w" component={ WidthTest } />
+    <Route exact path="/" component={Login} />
+    <Route path="/login" component={Login} />
+    <Route path="/register" component={Register} />
+    <Route path="/w" component={WidthTest} />
   </Switch>
 );
 
