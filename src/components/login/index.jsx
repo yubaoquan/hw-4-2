@@ -12,7 +12,9 @@ import {
   Text,
   Tooltip,
 } from '@chakra-ui/react';
-
+import { useFormik } from 'formik';
+import { useState } from 'react';
+import * as Yup from 'yup';
 import {
   AiFillLock,
   AiFillWechat,
@@ -27,13 +29,9 @@ import {
   snsIconStyle,
   topInputStyle,
 } from '@/components/common-style.js';
-
-import { useFormik } from 'formik';
-import { useState } from 'react';
-import { showError } from '@/utils/show-error.js';
 import request from '@/utils/request.js';
+import { showError } from '@/utils/show-error.js';
 import useToast from '@/utils/toast.js';
-import * as Yup from 'yup';
 
 export default function Login() {
   const toast = useToast();
@@ -78,23 +76,23 @@ export default function Login() {
 
   return (
     <Box>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={ formik.handleSubmit }>
         <FormControl isRequired>
           <Tooltip
             hasArrow
-            arrowSize={8}
+            arrowSize={ 8 }
             placement="right"
-            label={emailError}
-            isOpen={!!emailError}
+            label={ emailError }
+            isOpen={ !!emailError }
           >
             <InputGroup>
-              <InputLeftElement pointerEvents="none" h={inputHeight}>
-                <Icon as={GoPerson} color={myGray} />
+              <InputLeftElement pointerEvents="none" h={ inputHeight }>
+                <Icon as={ GoPerson } color={ myGray } />
               </InputLeftElement>
               <Input
                 placeholder="手机号或邮箱"
-                {...topInputStyle}
-                {...formik.getFieldProps('email')}
+                { ...topInputStyle }
+                { ...formik.getFieldProps('email') }
               />
             </InputGroup>
           </Tooltip>
@@ -103,19 +101,19 @@ export default function Login() {
         <FormControl isRequired>
           <Tooltip
             hasArrow
-            arrowSize={8}
+            arrowSize={ 8 }
             placement="right"
-            label={passwordError}
-            isOpen={!!passwordError}
+            label={ passwordError }
+            isOpen={ !!passwordError }
           >
             <InputGroup>
-              <InputLeftElement pointerEvents="none" h={inputHeight}>
-                <Icon as={AiFillLock} color={myGray} />
+              <InputLeftElement pointerEvents="none" h={ inputHeight }>
+                <Icon as={ AiFillLock } color={ myGray } />
               </InputLeftElement>
               <Input
                 placeholder="密码"
-                {...bottomInputStyle}
-                {...formik.getFieldProps('password')}
+                { ...bottomInputStyle }
+                { ...formik.getFieldProps('password') }
               />
             </InputGroup>
           </Tooltip>
@@ -123,25 +121,25 @@ export default function Login() {
 
         <Flex align="center" justify="space-between" my="15px">
           <Checkbox defaultIsChecked size="md">
-            <Text color={myGray} fontSize="15px">记住我</Text>
+            <Text color={ myGray } fontSize="15px">记住我</Text>
           </Checkbox>
-          <Link href="https://baidu.com" fontSize="14px" color="#999" _hover={{ color: '#333' }}>登录遇到问题?</Link>
+          <Link href="https://baidu.com" fontSize="14px" color="#999" _hover={ { color: '#333' } }>登录遇到问题?</Link>
         </Flex>
         <Button
-          {...submitBtnStyle}
-          {...commonSubmitBtnStyle}
-          isLoading={isLoading}
+          { ...submitBtnStyle }
+          { ...commonSubmitBtnStyle }
+          isLoading={ isLoading }
           loadingText="正在登录..."
-          onClick={formik.handleSubmit}
+          onClick={ formik.handleSubmit }
         >
           登录
         </Button>
       </form>
       <TextDivider title="社交帐号登录" />
       <Flex justify="center" py="10px">
-        <Icon as={AiOutlineWeibo} {...snsIconStyle} color="#e05244" />
-        <Icon as={AiFillWechat} {...snsIconStyle} color="#00bb29" />
-        <Icon as={AiOutlineQq} {...snsIconStyle} color="#498ad5" />
+        <Icon as={ AiOutlineWeibo } { ...snsIconStyle } color="#e05244" />
+        <Icon as={ AiFillWechat } { ...snsIconStyle } color="#00bb29" />
+        <Icon as={ AiOutlineQq } { ...snsIconStyle } color="#498ad5" />
       </Flex>
     </Box>
   );

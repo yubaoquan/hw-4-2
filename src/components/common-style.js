@@ -1,5 +1,10 @@
 export { GoPerson } from 'react-icons/go';
-export { AiFillLock, AiFillWechat, AiOutlineQq, AiOutlineWeibo } from 'react-icons/ai';
+export {
+  AiFillLock,
+  AiFillWechat,
+  AiOutlineQq,
+  AiOutlineWeibo,
+} from 'react-icons/ai';
 export { ImMobile2 } from 'react-icons/im';
 export { default as TextDivider } from './text-divider/index.jsx';
 

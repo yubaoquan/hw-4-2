@@ -3,8 +3,8 @@ import style from './text-divider.module.scss';
 
 export default function TextDevider({ title }) {
   return (
-    <div className={style.divider}>
-      <h6>{title}</h6>
+    <div className={ style.divider }>
+      <h6>{ title }</h6>
     </div>
   );
 }
